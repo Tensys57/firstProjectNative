@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,54 +7,79 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 
 import backgroundImage from "../Images/backgroundImage.png";
 import userImage from "../Images/young-bearded-man-with-striped-shirt.jpg";
 
-export default RegistrationScreen = () => (
-  <View style={styles.container}>
-    <ImageBackground
-      source={backgroundImage}
-      style={{ width: 375, height: 812 }}
-    >
-      <View style={styles.body}>
-        <View style={styles.flexbox}>
-          <Image source={userImage} style={styles.userImage} />
+export default RegistrationScreen = () => {
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onLogon = () => {
+    console.log("login:>>", `${login}`);
+    console.log("email>>", `${email}`);
+    console.log("password>>", `${password}`);
+  };
+
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={backgroundImage}
+        style={{ width: 375, height: 812 }}
+      >
+        <View style={styles.body}>
+          <View style={styles.flexbox}>
+            <Image source={userImage} style={styles.userImage} />
+          </View>
+          <Text style={[styles.title, { marginTop: 92, marginBottom: 32 }]}>
+            Реєстрація
+          </Text>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View>
+              <KeyboardAvoidingView
+                behavior={Platform.OS == "ios" ? "padding" : "height"}
+              >
+                <TextInput
+                  style={[styles.textInput, { textAlign: "left" }]}
+                  placeholder="Логін"
+                  value={login}
+                  onChangeText={setLogin}
+                />
+                <TextInput
+                  style={[styles.textInput, { textAlign: "left" }]}
+                  placeholder="Адреса електронної пошти"
+                  value={email}
+                  onChangeText={setEmail}
+                />
+                <TextInput
+                  style={[styles.textInput, { textAlign: "right" }]}
+                  placeholder="Показати"
+                  value={password}
+                  secureTextEntry={true}
+                  onChangeText={setPassword}
+                />
+                <TouchableOpacity style={styles.button}>
+                  <Text style={styles.buttonText} onPress={onLogon}>
+                    Зареєстуватися
+                  </Text>
+                </TouchableOpacity>
+              </KeyboardAvoidingView>
+            </View>
+          </TouchableWithoutFeedback>
+          <Text style={[styles.text, { marginTop: 16 }]}>
+            Вже є акаунт? Увійти
+          </Text>
         </View>
-        <Text style={[styles.title, { marginTop: 92, marginBottom: 32 }]}>
-          Реєстрація
-        </Text>
-        <TextInput
-          style={[styles.textInput, { textAlign: "left" }]}
-          placeholder="Логін"
-          // onChangeText={(newText) => setText(newText)}
-          // defaultValue={text}
-        />
-        <TextInput
-          style={[styles.textInput, { textAlign: "left" }]}
-          placeholder="Адреса електронної пошти"
-          // onChangeText={(newText) => setText(newText)}
-          // defaultValue={text}
-        />
-        <TextInput
-          style={[styles.textInput, { textAlign: "right" }]}
-          placeholder="Показати"
-          secureTextEntry={true}
-          // onChangeText={handlePasswordChange}
-          // value={password}
-        />
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Зареєстуватися</Text>
-        </TouchableOpacity>
-        <Text style={[styles.text, { marginTop: 16 }]}>
-          Немає акаунту? Увійти
-        </Text>
-      </View>
-    </ImageBackground>
-    <Text style={styles.title}>Реєстрація</Text>
-  </View>
-);
+      </ImageBackground>
+      <Text style={styles.title}>Реєстрація</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   body: {
