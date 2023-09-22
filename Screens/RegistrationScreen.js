@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import backgroundImage from "../Images/backgroundImage.png";
 import userImage from "../Images/young-bearded-man-with-striped-shirt.jpg";
@@ -20,10 +21,13 @@ export default RegistrationScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigation = useNavigation();
+
   const onLogon = () => {
-    console.log("login:>>", `${login}`);
-    console.log("email>>", `${email}`);
-    console.log("password>>", `${password}`);
+    // console.log("login:>>", `${login}`);
+    // console.log("email>>", `${email}`);
+    // console.log("password>>", `${password}`);
+     navigation.navigate("Home");
   };
 
   return (
@@ -71,7 +75,10 @@ export default RegistrationScreen = () => {
               </KeyboardAvoidingView>
             </View>
           </TouchableWithoutFeedback>
-          <Text style={[styles.text, { marginTop: 16 }]}>
+          <Text
+            style={[styles.text, { marginTop: 16 }]}
+            onPress={() => navigation.navigate("Login")}
+          >
             Вже є акаунт? Увійти
           </Text>
         </View>

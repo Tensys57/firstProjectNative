@@ -1,13 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
+
 import userImage from "../Images/young-bearded-man-with-striped-shirt.jpg";
-import logOut from "../Images/log-out.png";
+import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import union from "../Images/Union.png";
-import grid from "../Images/grid.png";
-import user from "../Images/user.png";
+
 
 export default PostsScreen = () => (
+  
   <View style={styles.container}>
     <View style={styles.header}>
       <View style={styles.HeaderTitle}>
@@ -16,7 +18,7 @@ export default PostsScreen = () => (
         </Text>
       </View>
       <View>
-        <Image style={{ width: 24, height: 24 }} source={logOut} />
+        <MaterialIcons name="logout" size={24} color="black" />
       </View>
     </View>
     <View style={styles.userCard}>
@@ -26,17 +28,32 @@ export default PostsScreen = () => (
         <Text style={styles.userEmail}>email@example.com</Text>
       </View>
     </View>
-    <View style={styles.tabBar}>
-      <Image style={{ width: 40, height: 40, marginLeft: 82 }} source={grid} />
-      <TouchableOpacity style={styles.buttonUnion}>
+     {/* <View style={styles.tabBar}>
+   <Ionicons
+        name="grid-outline"
+        size={24}
+        color="black"
+        // onPress={navigateToHome}
+      />
+      <TouchableOpacity
+        style={styles.buttonUnion}
+        // onPress={navigateToCreatePosts}
+      >
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
           <Image style={{ width: 13, height: 13 }} source={union} />
         </View>
       </TouchableOpacity>
-      <Image style={{ width: 40, height: 40, marginRight: 81 }} source={user} />
-    </View>
+      <AntDesign
+        name="user"
+        size={24}
+        color="black"
+        // onPress={navigateToProfile}
+      />
+    </View> */}
+    
+    
   </View>
 );
 
@@ -48,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   header: {
-    height: 44,
+    height: 88,
     width: 375,
     flexDirection: "row",
     alignItems: "center",
