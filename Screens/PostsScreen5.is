@@ -1,12 +1,43 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
+import { useRoute } from "@react-navigation/native";
 
 import userImage from "../Images/young-bearded-man-with-striped-shirt.jpg";
-import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import union from "../Images/Union.png";
+import {  } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign, Ionicons,Feather } from "@expo/vector-icons";
 
-export default PostsScreen = () => (
+
+
+export default PostsScreen = () => {
+const [postsGallery, setPostsGallery] = useState([]);
+const route = useRoute();
+const { postData } = route.params;
+
+  
+//  const addPostToGallery = (newPostData) => {
+//    setPostsGallery((prevGallery) => [...prevGallery, newPostData]);
+//   };
+
+ useEffect(() => {
+   if (postData) {
+     setPostsGallery((prevGallery) => [...prevGallery, postData]);
+   }
+ }, [postData]);
+
+  // const { locality, titlePhoto, photoUri, coords } = postData
+  // console.log("titlePhoto :>> ", titlePhoto);
+  // console.log("locality:>> ", locality);
+  // console.log("photoUri :>> ", photoUri);
+  // console.log("location :>> ", coords);
+  // console.log("postsGallery.length>>", postsGallery.length);
+return(
   <View style={styles.container}>
     <View style={styles.header}>
       <View style={styles.HeaderTitle}>
@@ -25,32 +56,22 @@ export default PostsScreen = () => (
         <Text style={styles.userEmail}>email@example.com</Text>
       </View>
     </View>
-    {/* <View style={styles.tabBar}>
-   <Ionicons
-        name="grid-outline"
-        size={24}
-        color="black"
-        // onPress={navigateToHome}
-      />
-      <TouchableOpacity
-        style={styles.buttonUnion}
-        // onPress={navigateToCreatePosts}
-      >
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Image style={{ width: 13, height: 13 }} source={union} />
-        </View>
-      </TouchableOpacity>
-      <AntDesign
-        name="user"
-        size={24}
-        color="black"
-        // onPress={navigateToProfile}
-      />
-    </View> */}
-  </View>
-);
+    <SafeAreaView style={styles.body}>
+      <ScrollView style={styles.postsList}>
+        {postsGallery.map((item) => (
+          <>
+            <Image style={styles.imageItem} source={{ uri: item.photoUri }} />
+            <Text style={styles.textItem}>{item.titlePhoto}</Text>
+            <View style={styles.boxItem}>
+              <Feather name="message-circle" size={24} color={"#212121"} />
+              <Text style={styles.textItem}>{item.locality}</Text>
+            </View>
+          </>
+        ))}
+      </ScrollView>
+    </SafeAreaView>
+  </View>)
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -133,4 +154,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF6C00",
     borderRadius: 20,
   },
+  imageItem: {
+    height: 200,
+    width: 342,
+  },
+  boxItem: {
+    flexDirection:'row'
+  },
+  postsList: {
+    marginTop:90
+  }
 });

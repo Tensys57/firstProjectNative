@@ -23,6 +23,7 @@ export default LoginScreen = () => {
   const onLogon = () => {
     // console.log("email>>", `${email}`);
     // console.log("password>>", `${password}`);
+    // navigation.navigate("CreatePostsScreen");
     navigation.navigate("Home");
   };
 

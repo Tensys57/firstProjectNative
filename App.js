@@ -23,8 +23,7 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 
-import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import union from "./Images/Union.png";
 
 const MainStack = createStackNavigator();
@@ -56,14 +55,13 @@ export default function App() {
     return null;
   }
 
-
   const Tab = createBottomTabNavigator();
 
   // const navigation = useNavigation();
-  const handleCustomTabPress = () => {
-    // navigation.navigate("CreatePosts");
-    console.log("navigation :>> ", "CreatePosts");
-  };
+  // const handleCustomTabPress = () => {
+  // navigation.navigate("CreatePosts");
+  // console.log("navigation :>> ", "CreatePosts");
+  // };
 
   const TabNavigator = () => (
     <Tab.Navigator
@@ -109,9 +107,7 @@ export default function App() {
         options={{
           headerShown: false,
           tabBarShowLabel: false,
-          tabBarButton: (props) => (
-            <CustomTabBarButton {...props} onPress={handleCustomTabPress} />
-          ),
+          tabBarButton: (props) => <CustomTabBarButton {...props} />,
         }}
       />
       <Tab.Screen
@@ -121,7 +117,6 @@ export default function App() {
       />
     </Tab.Navigator>
   );
-
 
   const styles = StyleSheet.create({
     container: {
@@ -154,6 +149,11 @@ export default function App() {
         <MainStack.Screen
           name="PostsScreen"
           component={PostsScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="CreatePostsScreen"
+          component={CreatePostsScreen}
           options={{ headerShown: false }}
         />
       </MainStack.Navigator>
@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
     height: 60,
     flex: 2,
     justifyContent: "center",
+    alignItems: "center",
   },
 
   buttonUnion: {
