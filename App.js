@@ -13,12 +13,15 @@ import {
   Styles,
 } from "react-native";
 
+
 import HomeScreen from "./Screens/HomeScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import RegistrationScreen from "./Screens/RegistrationScreen";
 import PostsScreen from "./Screens/PostsScreen";
 import CreatePostsScreen from "./Screens/CreatePostsScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
+import CommentScreen from "./Screens/CommentScreen";
+import MapScreen from "./Screens/MapScreen";
 
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
@@ -56,12 +59,6 @@ export default function App() {
   }
 
   const Tab = createBottomTabNavigator();
-
-  // const navigation = useNavigation();
-  // const handleCustomTabPress = () => {
-  // navigation.navigate("CreatePosts");
-  // console.log("navigation :>> ", "CreatePosts");
-  // };
 
   const TabNavigator = () => (
     <Tab.Navigator
@@ -118,15 +115,6 @@ export default function App() {
     </Tab.Navigator>
   );
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-  });
-
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
@@ -154,6 +142,16 @@ export default function App() {
         <MainStack.Screen
           name="CreatePostsScreen"
           component={CreatePostsScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="CommentScreen"
+          component={CommentScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="MapScreen"
+          component={MapScreen}
           options={{ headerShown: false }}
         />
       </MainStack.Navigator>

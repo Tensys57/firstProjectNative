@@ -1,63 +1,123 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
+import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 import userImage from "../Images/young-bearded-man-with-striped-shirt.jpg";
-import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import union from "../Images/Union.png";
+import {
+  MaterialIcons,
+  AntDesign,
+  Ionicons,
+  Feather,
+} from "@expo/vector-icons";
 
-export default PostsScreen = () => (
-  <View style={styles.container}>
-    <View style={styles.header}>
-      <View style={styles.HeaderTitle}>
-        <Text style={[styles.subTitle, { marginTop: 11, marginBottom: 11 }]}>
-          Публікації
-        </Text>
-      </View>
-      <View>
-        <MaterialIcons name="logout" size={24} color="black" />
-      </View>
-    </View>
-    <View style={styles.userCard}>
-      <Image source={userImage} style={styles.userImage} />
-      <View style={styles.flexbox}>
-        <Text style={styles.userName}>Rubi Jackson</Text>
-        <Text style={styles.userEmail}>email@example.com</Text>
-      </View>
-    </View>
-    {/* <View style={styles.tabBar}>
-   <Ionicons
-        name="grid-outline"
-        size={24}
-        color="black"
-        // onPress={navigateToHome}
-      />
-      <TouchableOpacity
-        style={styles.buttonUnion}
-        // onPress={navigateToCreatePosts}
-      >
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Image style={{ width: 13, height: 13 }} source={union} />
+export default PostsScreen = () => {
+  const [postsGallery, setPostsGallery] = useState([]);
+  const route = useRoute();
+  const postData = route.params ? route.params.postData : null;
+
+  const navigation = useNavigation();
+
+  const commentsQwauntity = 5;
+
+  useEffect(() => {
+    if (postData) {
+      setPostsGallery((prevGallery) => [...prevGallery, postData]);
+    }
+  }, [postData]);
+
+  const navigateToComment = async () => {
+    try {
+      navigation.navigate("CommentScreen", {
+        postData,
+      });
+    } catch (error) {
+      console.error("Error while switch to map:", error);
+    }
+  };
+
+  const navigateToMap = async () => {
+    try {
+      navigation.navigate("MapScreen", {
+        postData,
+      });
+    } catch (error) {
+      console.error("Error while switch to comment:", error);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.HeaderTitle}>
+          <Text style={[styles.subTitle, { marginTop: 11, marginBottom: 11 }]}>
+            Публікації
+          </Text>
         </View>
-      </TouchableOpacity>
-      <AntDesign
-        name="user"
-        size={24}
-        color="black"
-        // onPress={navigateToProfile}
-      />
-    </View> */}
-  </View>
-);
+        <View>
+          <MaterialIcons name="logout" size={24} color="black" />
+        </View>
+      </View>
+      <View style={styles.userCard}>
+        <Image source={userImage} style={styles.userImage} />
+        <View style={styles.flexbox}>
+          <Text style={styles.userName}>Rubi Jackson</Text>
+          <Text style={styles.userEmail}>email@example.com</Text>
+        </View>
+      </View>
+      <SafeAreaView style={styles.body}>
+        <ScrollView style={styles.postsList}>
+          {postsGallery.map((item, index) => (
+            <View key={index}>
+              <Image style={styles.imageItem} source={{ uri: item.photoUri }} />
+              <Text style={styles.titleItem}>{item.titlePhoto}</Text>
+              <View style={styles.boxItem}>
+                <View style={styles.comments}>
+                  <Feather
+                    name="message-circle"
+                    size={24}
+                    color={"#BDBDBD"}
+                    marginRight={6}
+                  />
+                  <Text
+                    style={[styles.textItem, { color: "#BDBDBD" }]}
+                    onPress={navigateToComment}
+                  >
+                    {commentsQwauntity}
+                  </Text>
+                </View>
+                <View style={styles.comments}>
+                  <Feather
+                    name="map-pin"
+                    size={24}
+                    color="#BDBDBD"
+                    marginRight={4}
+                    style={styles.icon}
+                    onPress={navigateToMap}
+                  />
+                  <Text style={styles.textItem}>{item.locality}</Text>
+                </View>
+              </View>
+            </View>
+          ))}
+        </ScrollView>
+      </SafeAreaView>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
   },
   header: {
     height: 88,
@@ -132,5 +192,31 @@ const styles = StyleSheet.create({
     width: 70,
     backgroundColor: "#FF6C00",
     borderRadius: 20,
+  },
+  imageItem: {
+    height: 240,
+    width: 343,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  titleItem: {
+    fontSize: 16,
+    fontFamily: "Roboto",
+    fontWeight: "medium",
+    marginBottom: 8,
+  },
+  textItem: {
+    fontSize: 16,
+    fontFamily: "Roboto",
+    fontWeight: "regular",
+    marginBottom: 16,
+  },
+  boxItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  comments: { flexDirection: "row" },
+  postsList: {
+    marginTop: 90,
   },
 });

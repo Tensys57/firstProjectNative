@@ -1,33 +1,41 @@
 import React from "react";
+import { useRoute } from "@react-navigation/native";
 
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
-
 const MapScreen = () => {
-   return (
-     <View style={styles.container}>
-       <MapView
-         style={styles.mapStyle}
-         region={{
-           latitude: 37.78825,
-           longitude: -122.4324,
-           latitudeDelta: 0.0922,
-           longitudeDelta: 0.0421,
-         }}
-         mapType="standard"
-         minZoomLevel={15}
-         onMapReady={() => console.log("Map is ready")}
-         onRegionChange={() => console.log("Region change")}
-       >
-         <Marker
-           title="I am here"
-           coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
-           description="Hello"
-         />
-       </MapView>
-     </View>
-   );
+  const route = useRoute();
+  const postData = route.params ? route.params.postData : null;
+
+
+  const myLatitude = postData.coords.latitude;
+  const myLongitude = postData.coords.longitude;
+
+
+  return (
+    <View style={styles.container}>
+      <MapView
+        style={styles.mapStyle}
+        region={{
+          latitude: 48.4659334,
+          longitude: 35.0608217,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        mapType="standard"
+        minZoomLevel={15}
+        // onMapReady={() => console.log("Map is ready")}
+        onRegionChange={() => console.log("Region change")}
+      >
+        <Marker
+          title="I am here"
+          coordinate={{ latitude: myLatitude, longitude: myLongitude }}
+          description="Hello"
+        />
+      </MapView>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
